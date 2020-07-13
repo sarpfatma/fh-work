@@ -1,0 +1,16 @@
+{
+  "APP_NAME": "Financial App",
+  "About": "About",
+  "Hello world !": "Hello world !",
+  "Home": "Home",
+  "Logged in as": "Logged in as",
+  "Login": "Login",
+  "Logout": "Logout",
+  "Password": "Password",
+  "Password is required": "Password is required",
+  "Email": "Email",
+  "Email is required": "Email is required",
+  "Email or password incorrect.": "Email or password incorrect.",
+  "Remember me": "Remember me",
+  "Version": "Version"
+}

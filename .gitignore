@@ -1,0 +1,95 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+
+# CLIENT
+
+# Compiled output
+/client/dist
+/src/main/resources/static/*
+/client/tmp
+/client/out-tsc
+# Only exists if Bazel was run
+/client/bazel-out
+
+# Dependencies
+/client/node_modules
+
+# Cordova
+/client/www
+/client/plugins
+/client/platforms
+
+# Electron
+/client/dist.electron
+/client/electron.main.js
+
+# IDEs and editors
+.idea/*
+!.idea/runConfigurations/
+!.idea/codeStyleSettings.xml
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+xcuserdata/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Maven
+/target
+/log
+
+# Misc
+/client/.sass-cache
+/client/connect.lock
+/client/coverage
+/client/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/client/typings
+/client/reports
+/client/src/translations/template.*
+/client/src/environments/.env.*
+
+# System Files
+.DS_Store
+Thumbs.db
+

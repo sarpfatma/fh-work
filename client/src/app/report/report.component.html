@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 report-left-block">
+      <form (ngSubmit)="get()" [formGroup]="filterForm" novalidate>
+        <div class="form-group">
+          <label for="fromDate">Start Date</label>
+          <input type="date" class="form-control" id="fromDate" formControlName="fromDate">
+        </div>
+        <div class="form-group">
+          <label for="toDate">End Date</label>
+          <input type="date" class="form-control" id="toDate" formControlName="toDate">
+        </div>
+        <div class="form-group">
+          <label for="merchantId">Merchant ID</label>
+          <input type="number" class="form-control" id="merchantId" formControlName="merchantId">
+        </div>
+        <div class="form-group">
+          <label for="acquirerId">Acquirer ID</label>
+          <input type="number" class="form-control" id="acquirerId" formControlName="acquirerId">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> Query</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-9">
+      <app-loader [isLoading]="isLoading"></app-loader>
+      <table class="table" [hidden]="isLoading">
+        <thead>
+        <tr>
+          <th scope="col">Currency</th>
+          <th scope="col">Count</th>
+          <th scope="col">Total</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let currency of currencies">
+          <td>{{currency.currency}}</td>
+          <td>{{currency.count}}</td>
+          <td>{{currency.total}}</td>
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <td><b>Total</b></td>
+          <td colspan="2"><b>{{totalItem}}</b></td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

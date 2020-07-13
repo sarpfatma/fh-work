@@ -1,0 +1,257 @@
+<div class="container-fluid">
+  <div class="row" [hidden]="!isLoading">
+    <div class="col-sm-12 padding-top-col">
+      <app-loader [isLoading]="isLoading"></app-loader>
+    </div>
+  </div>
+  <div class="row" *ngIf="trn">
+    <div class="col-sm-4 padding-top-col">
+      <h4>FX</h4>
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <td >Original Amount</td>
+          <td>{{trn.fx.merchant.originalAmount}}</td>
+        </tr>
+        <tr>
+          <td>Original Currency</td>
+          <td>{{trn.fx.merchant.originalCurrency}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-4 padding-top-col">
+      <h4>Customer</h4>
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <td>ID</td>
+          <td>{{trn.customerInfo.id}}</td>
+        </tr>
+        <tr>
+          <td>Created at</td>
+          <td>{{trn.customerInfo.created_at}}</td>
+        </tr>
+        <tr>
+          <td>Updated at</td>
+          <td>{{trn.customerInfo.updated_at}}</td>
+        </tr>
+        <tr>
+          <td>Deleted at</td>
+          <td>{{trn.customerInfo.deleted_at}}</td>
+        </tr>
+        <tr>
+          <td>Number</td>
+          <td>{{trn.customerInfo.number}}</td>
+        </tr>
+        <tr>
+          <td>Expiry Month</td>
+          <td>{{trn.customerInfo.expiryMonth}}</td>
+        </tr>
+        <tr>
+          <td>Expiry Year</td>
+          <td>{{trn.customerInfo.expiryYear}}</td>
+        </tr>
+        <tr>
+          <td>Start Month</td>
+          <td>{{trn.customerInfo.startMonth}}</td>
+        </tr>
+        <tr>
+          <td>Start Year</td>
+          <td>{{trn.customerInfo.startYear}}</td>
+        </tr>
+        <tr>
+          <td>Issue Number</td>
+          <td>{{trn.customerInfo.issueNumber}}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>{{trn.customerInfo.email}}</td>
+        </tr>
+        <tr>
+          <td>Birthday</td>
+          <td>{{trn.customerInfo.birthday}}</td>
+        </tr>
+        <tr>
+          <td>Gender</td>
+          <td>{{trn.customerInfo.gender}}</td>
+        </tr>
+        <tr>
+          <td colspan="2"><h4>Billing</h4></td>
+        </tr>
+        <tr>
+          <td>Billing Title</td>
+          <td>{{trn.customerInfo.billingTitle}}</td>
+        </tr>
+        <tr>
+          <td>Billing FirstName</td>
+          <td>{{trn.customerInfo.billingFirstName}}</td>
+        </tr>
+        <tr>
+          <td>Billing LastName</td>
+          <td>{{trn.customerInfo.billingLastName}}</td>
+        </tr>
+        <tr>
+          <td>Billing Company</td>
+          <td>{{trn.customerInfo.billingCompany}}</td>
+        </tr>
+        <tr>
+          <td>Billing Address 1</td>
+          <td>{{trn.customerInfo.billingAddress1}}</td>
+        </tr>
+        <tr>
+          <td>Billing Address 2</td>
+          <td>{{trn.customerInfo.billingAddress2}}</td>
+        </tr>
+        <tr>
+          <td>Billing City</td>
+          <td>{{trn.customerInfo.billingCity}}</td>
+        </tr>
+        <tr>
+          <td>Billing Postcode</td>
+          <td>{{trn.customerInfo.billingPostcode}}</td>
+        </tr>
+        <tr>
+          <td>Billing State</td>
+          <td>{{trn.customerInfo.billingState}}</td>
+        </tr>
+        <tr>
+          <td>Billing Country</td>
+          <td>{{trn.customerInfo.billingCountry}}</td>
+        </tr>
+        <tr>
+          <td>Billing Phone</td>
+          <td>{{trn.customerInfo.billingPhone}}</td>
+        </tr>
+        <tr>
+          <td>Billing Fax</td>
+          <td>{{trn.customerInfo.billingFax}}</td>
+        </tr>
+        <tr>
+          <td colspan="2"><h4>Shipping</h4></td>
+        </tr>
+        <tr>
+          <td>Shipping Title</td>
+          <td>{{trn.customerInfo.shippingTitle}}</td>
+        </tr>
+        <tr>
+          <td>Shipping FirstName</td>
+          <td>{{trn.customerInfo.shippingFirstName}}</td>
+        </tr>
+        <tr>
+          <td>Shipping LastName</td>
+          <td>{{trn.customerInfo.shippingLastName}}</td>
+        </tr>
+        <tr>
+          <td>Shipping Company</td>
+          <td>{{trn.customerInfo.shippingCompany}}</td>
+        </tr>
+        <tr>
+          <td>Shipping Address 1</td>
+          <td>{{trn.customerInfo.shippingAddress1}}</td>
+        </tr>
+        <tr>
+          <td>Shipping Address 2</td>
+          <td>{{trn.customerInfo.shippingAddress2}}</td>
+        </tr>
+        <tr>
+          <td>Shipping City</td>
+          <td>{{trn.customerInfo.shippingCity}}</td>
+        </tr>
+        <tr>
+          <td>Billing Postcode</td>
+          <td>{{trn.customerInfo.billingPostcode}}</td>
+        </tr>
+        <tr>
+          <td>Shipping State</td>
+          <td>{{trn.customerInfo.shippingState}}</td>
+        </tr>
+        <tr>
+          <td>Shipping Country</td>
+          <td>{{trn.customerInfo.shippingCountry}}</td>
+        </tr>
+        <tr>
+          <td>Shipping Phone</td>
+          <td>{{trn.customerInfo.shippingPhone}}</td>
+        </tr>
+        <tr>
+          <td>Shipping Fax</td>
+          <td>{{trn.customerInfo.shippingFax}}</td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-4 padding-top-col">
+      <h4>Merchant</h4>
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <td>referenceNo</td>
+          <td>{{trn.transaction.merchant.referenceNo}}</td>
+        </tr>
+        <tr>
+          <td>merchantId</td>
+          <td>{{trn.transaction.merchant.merchantId}}</td>
+        </tr>
+        <tr>
+          <td>status</td>
+          <td>{{trn.transaction.merchant.status}}</td>
+        </tr>
+        <tr>
+          <td>channel</td>
+          <td>{{trn.transaction.merchant.channel}}</td>
+        </tr>
+        <tr>
+          <td>customData</td>
+          <td>{{trn.transaction.merchant.customData}}</td>
+        </tr>
+        <tr>
+          <td>chainId</td>
+          <td>{{trn.transaction.merchant.chainId}}</td>
+        </tr>
+        <tr>
+          <td>agentInfoId</td>
+          <td>{{trn.transaction.merchant.agentInfoId}}</td>
+        </tr>
+        <tr>
+          <td>operation</td>
+          <td>{{trn.transaction.merchant.operation}}</td>
+        </tr>
+        <tr>
+          <td>fxTransactionId</td>
+          <td>{{trn.transaction.merchant.fxTransactionId}}</td>
+        </tr>
+        <tr>
+          <td>updated_at</td>
+          <td>{{trn.transaction.merchant.updated_at}}</td>
+        </tr>
+        <tr>
+          <td>id</td>
+          <td>{{trn.transaction.merchant.id}}</td>
+        </tr>
+        <tr>
+          <td>acquirerTransactionId</td>
+          <td>{{trn.transaction.merchant.acquirerTransactionId}}</td>
+        </tr>
+        <tr>
+          <td>code</td>
+          <td>{{trn.transaction.merchant.code}}</td>
+        </tr>
+        <tr>
+          <td>message</td>
+          <td>{{trn.transaction.merchant.message}}</td>
+        </tr>
+        <tr>
+          <td>transactionId</td>
+          <td>{{trn.transaction.merchant.transactionId}}</td>
+        </tr>
+        <tr>
+          <td>agent</td>
+          <td>{{trn.transaction.merchant.agent}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

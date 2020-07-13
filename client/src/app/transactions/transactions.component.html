@@ -1,0 +1,124 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 transactions-left-block">
+      <form (ngSubmit)="get()" [formGroup]="filterForm" novalidate>
+        <div class="form-group">
+          <label for="fromDate">Start Date</label>
+          <small
+            [hidden]="filterForm.controls.fromDate.valid || filterForm.controls.fromDate.untouched"
+            class="text-danger"
+            translate
+          >
+            Start date is required
+          </small>
+          <input type="date" formControlName="fromDate" class="form-control" id="fromDate">
+        </div>
+        <div class="form-group">
+          <label for="toDate">End Date</label>
+          <input type="date" formControlName="toDate" class="form-control" id="toDate">
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" class="form-control" formControlName="status">
+            <option value="null">--</option>
+            <option value="approved">Approved</option>
+            <option value="declined">Declined</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="operation">Status</label>
+          <select id="operation" class="form-control" formControlName="operation">
+            <option value="null">--</option>
+            <option value="3D">3D</option>
+            <option value="normal">Normal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="merchantId">Merchant ID</label>
+          <input type="number" class="form-control" id="merchantId" formControlName="merchantId">
+        </div>
+        <div class="form-group">
+          <label for="acquirerId">Acquirer ID</label>
+          <input type="number" class="form-control" id="acquirerId" formControlName="acquirerId">
+        </div>
+        <div class="form-group">
+          <label for="paymentMethod">Payment Method</label>
+          <select id="paymentMethod" class="form-control" formControlName="paymentMethod">
+            <option value="null">--</option>
+            <option value="CREDITCARD">Credit Card</option>
+            <option value="CACHE">CACHE</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="errorCode">Error Code</label>
+          <input id="errorCode" class="form-control" type="text" placeholder="Error Code" formControlName="errorCode">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> Query</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-9">
+      <app-loader [isLoading]="isLoading"></app-loader>
+      <table class="table" [hidden]="isLoading">
+        <thead>
+        <tr>
+          <th scope="col">TRN ID</th>
+          <th scope="col">FX</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Merchant</th>
+          <th scope="col">IPN Status</th>
+          <th scope="col">Refundable</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="itemDetailLine" *ngFor="let trn of transactions">
+          <td>
+            <a class="btn btn-block btn-link" [routerLink]="['/transactions/'+trn.transaction.merchant.transactionId]"
+               routerLinkActive="active">{{trn.transaction.merchant.transactionId}}</a>
+          </td>
+          <td>{{trn.fx.merchant.originalAmount}} <b>{{trn.fx.merchant.originalCurrency}}</b></td>
+          <td>{{trn.customerInfo.billingFirstName}} {{trn.customerInfo.billingLastName}} ({{trn.customerInfo.email}})
+          </td>
+          <td>{{trn.merchant.name}}</td>
+          <td>
+            <i class="fa fa-check" *ngIf="trn.ipn.received"></i>
+            <i class="fa fa-node" *ngIf="!trn.ipn.received"></i>
+          </td>
+          <td>
+            <i class="fa fa-check" *ngIf="trn.refundable"></i>
+            <i class="fa fa-node" *ngIf="!trn.refundable"></i>
+          </td>
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <td><b>Total</b></td>
+          <td colspan="6"><b>{{totalItem}}</b></td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

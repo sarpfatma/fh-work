@@ -1,0 +1,276 @@
+package com.maya.homework.services;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maya.homework.models.*;
+import com.maya.homework.models.requests.LoginForm;
+import com.maya.homework.models.requests.TransactionListForm;
+import com.maya.homework.models.requests.TransactionReportForm;
+import com.maya.homework.models.responses.LoginResponse;
+import com.maya.homework.models.responses.TransactionDetailResponse;
+import com.maya.homework.models.responses.TransactionReportResponse;
+import com.maya.homework.models.responses.TransactionListResponse;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class ApiService {
+    public String endpoint = "https://sandbox-reporting.rpdpymnt.com/api/v3";
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    String[] dummyCurrencies = {"TRY", "USD", "DZD", "AZN", "EUR", "AUD"};
+
+    public LoginResponse login(LoginForm loginform) throws JSONException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String url = endpoint + "/merchant/user/login";
+
+        JSONObject personJsonObject = new JSONObject();
+        personJsonObject.put("email", loginform.email);
+        personJsonObject.put("password", loginform.password);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> entity = new HttpEntity<String>(personJsonObject.toString(), headers);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setStatus(500);
+
+        try {
+            String endpointResponse = restTemplate.postForObject(url, entity, String.class);
+            JsonNode responseObject = objectMapper.readTree(endpointResponse);
+
+            System.out.println(responseObject.toString());
+            loginResponse.setToken(responseObject.path("token").asText());
+            if (responseObject.path("status").asText().equals("APPROVED")) {
+                loginResponse.setStatus(200);
+            }
+
+        } catch (HttpStatusCodeException exception) {
+            int statusCode = exception.getStatusCode().value();
+
+            loginResponse.setError("Incorrect username or password!");
+            loginResponse.setStatus(statusCode);
+            return loginResponse;
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+            loginResponse.setError("Invalid Cred");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            loginResponse.setError("Invalid Cred");
+        }
+
+
+        return loginResponse;
+    }
+
+    public TransactionReportResponse transactionReport(TransactionReportForm transactionReportForm) {
+        // DUMMY DATA
+
+        // int randomSize = new Random().nextInt();
+        int randomNum = ThreadLocalRandom.current().nextInt(3, 5);
+
+        CurrencyModel[] currencies = new CurrencyModel[randomNum];
+
+        for (int i = 0; i < randomNum; i++) {
+            CurrencyModel currency = new CurrencyModel();
+
+            Random rand = new Random();
+
+            int randomCount = ThreadLocalRandom.current().nextInt(1, 50);
+            int randomTotal = ThreadLocalRandom.current().nextInt(5000, 10000);
+
+            currency.setCount(randomCount);
+            currency.setTotal(randomTotal);
+            currency.setCurrency(this.dummyCurrencies[rand.nextInt(this.dummyCurrencies.length)]);
+            currencies[i] = currency;
+        }
+
+        TransactionReportResponse transactionReportResponse = new TransactionReportResponse();
+
+        transactionReportResponse.setCurrencies(currencies);
+        transactionReportResponse.setTotal(currencies.length);
+
+        return transactionReportResponse;
+    }
+
+    public TransactionListResponse transactionList(TransactionListForm transactionListForm) {
+        // DUMMY DATA
+        // i made a dummy service because your api service received the mongo error
+
+        // int randomSize = new Random().nextInt();
+        int randomSize = ThreadLocalRandom.current().nextInt(10, 40);
+
+        TransactionDataItemModel[] data = new TransactionDataItemModel[randomSize];
+
+        for (int i = 0; i < randomSize; i++) {
+            TransactionDataItemModel transaction = new TransactionDataItemModel();
+
+            Random rand = new Random();
+
+            // GENERATE DUMMY FX MODEL
+            AcquirerModel randomFxModel = new AcquirerModel();
+            FxModel fxModel = new FxModel();
+            FxMerchantModel fxMerchant = new FxMerchantModel();
+
+            double randomAmount = ThreadLocalRandom.current().nextDouble() * 10000;
+            double roundOff = Math.round(randomAmount * 100.0) / 100.0;
+            fxMerchant.setOriginalAmount(roundOff);
+            fxMerchant.setOriginalCurrency(this.dummyCurrencies[rand.nextInt(this.dummyCurrencies.length)]);
+            fxModel.setMerchant(fxMerchant);
+            transaction.setFx(fxModel);
+
+            // GENERATE DUMMY ACQUIRER MODEL
+            AcquirerModel randomAcquirer = new AcquirerModel();
+            int randomAcquirerId = ThreadLocalRandom.current().nextInt(1, 50);
+            randomAcquirer.setId(randomAcquirerId);
+            randomAcquirer.setName("Test Dummy Acq " + (i + 1));
+            transaction.setAcquirer(randomAcquirer);
+
+            // GENERATE DUMMY CUSTOMER MODEL
+            CustomerInfoModel customerInfoModel = new CustomerInfoModel();
+            customerInfoModel.setEmail("test@test.io");
+            customerInfoModel.setBillingFirstName("Customer " + (i + 1));
+            customerInfoModel.setBillingLastName("Lastname");
+            transaction.setCustomerInfo(customerInfoModel);
+
+
+            // GENERATE DUMMY MERCHANT MODEL
+            MerchantModel randomMerchant = new MerchantModel();
+            int randomMerchantId = ThreadLocalRandom.current().nextInt(1, 50);
+            randomMerchant.setId(randomMerchantId);
+            randomMerchant.setName("Test Dummy Merchant " + (i + 1));
+            transaction.setMerchant(randomMerchant);
+
+            // GENERATE DUMMY TRN MODEL
+            TrnModel randomTrn = new TrnModel();
+
+            // GENERATE DUMMY MERCHANT for TRN
+            TrnMerchantModel randomTrnMerchant = new TrnMerchantModel();
+            randomTrnMerchant.setCreated_at(new Date());
+            randomTrnMerchant.setMessage("Auth3D is APPROVED");
+            randomTrnMerchant.setOperation("3DAUTH");
+            randomTrnMerchant.setStatus("APPROVED");
+            int randomRrfId = ThreadLocalRandom.current().nextInt(1000, 40000);
+            randomTrnMerchant.setReferenceNo("api_560a" + randomRrfId);
+            int randomTrnId = ThreadLocalRandom.current().nextInt(100000, 999999);
+            randomTrnMerchant.setTransactionId(Integer.toString(randomTrnId));
+
+            randomTrn.setMerchant(randomTrnMerchant);
+            transaction.setTransaction(randomTrn);
+
+            // GENERATE DUMMY IPN MODEL
+
+            TrnIpnModel trnIpnModel = new TrnIpnModel(rand.nextBoolean());
+            transaction.setIpn(trnIpnModel);
+
+            // SET DUMMY REFUNDABLE PARAM
+            transaction.setRefundable(rand.nextBoolean());
+
+
+            data[i] = transaction;
+        }
+
+        TransactionListResponse transactionListResponse = new TransactionListResponse();
+
+        transactionListResponse.setData(data);
+        transactionListResponse.setTotal(data.length);
+
+        return transactionListResponse;
+    }
+
+    public TransactionDetailResponse transactionDetail(String transactionId) {
+
+        // DUMMY RESPONSE
+
+        TransactionDetailResponse transactionDetailResponse = new TransactionDetailResponse();
+
+        // GENERATE DUMMY FX
+        FxModel dummyFx = new FxModel();
+        FxMerchantModel dummyFxMerchant = new FxMerchantModel();
+        dummyFxMerchant.setOriginalAmount(2.2);
+        dummyFxMerchant.setOriginalCurrency("USD");
+        dummyFx.setMerchant(dummyFxMerchant);
+        transactionDetailResponse.setFx(dummyFx);
+
+        // GENERATE DUMMY CUSTOMER
+        CustomerInfoModel customerInfoModel = new CustomerInfoModel();
+        customerInfoModel.setId(1);
+        customerInfoModel.setCreated_at(new Date());
+        customerInfoModel.setUpdated_at(new Date());
+        customerInfoModel.setDeleted_at(new Date());
+        customerInfoModel.setNumber("401288XXXXXX1881");
+        customerInfoModel.setExpiryMonth("6");
+        customerInfoModel.setExpiryYear("2017");
+        customerInfoModel.setStartMonth(null);
+        customerInfoModel.setStartYear(null);
+        customerInfoModel.setIssueNumber(null);
+        customerInfoModel.setEmail("test@test.info");
+        customerInfoModel.setBirthday(new Date());
+        customerInfoModel.setGender("Male");
+        customerInfoModel.setBillingTitle(null);
+        customerInfoModel.setBillingFirstName("Michael");
+        customerInfoModel.setBillingLastName("Kara");
+        customerInfoModel.setBillingCompany(null);
+        customerInfoModel.setBillingAddress1("test address");
+        customerInfoModel.setBillingAddress1(null);
+        customerInfoModel.setBillingCity("Antalya");
+        customerInfoModel.setBillingPostcode("07070");
+        customerInfoModel.setBillingState(null);
+        customerInfoModel.setBillingCountry("TR");
+        customerInfoModel.setBillingFax(null);
+        customerInfoModel.setShippingTitle(null);
+        customerInfoModel.setShippingFirstName("Michael");
+        customerInfoModel.setShippingLastName("Kara");
+        customerInfoModel.setShippingCompany(null);
+        customerInfoModel.setShippingAddress1("test address 2");
+        customerInfoModel.setShippingAddress1("test address 2");
+        customerInfoModel.setShippingCity("Antalya");
+        customerInfoModel.setShippingPostcode("07070");
+        customerInfoModel.setShippingState(null);
+        customerInfoModel.setShippingCountry("TR");
+        customerInfoModel.setShippingPhone(null);
+        customerInfoModel.setShippingFax(null);
+        transactionDetailResponse.setCustomerInfo(customerInfoModel);
+
+        // GENERATE DUMMY MERCHANT
+        MerchantModel merchantModel = new MerchantModel();
+        merchantModel.setId(1);
+        merchantModel.setName("Dummy Merchant 1");
+        transactionDetailResponse.setMerchant(merchantModel);
+
+        // GENERATE DUMMY TRANSACTION
+        TrnModel trnModel = new TrnModel();
+        TrnMerchantModel trnMerchantModel = new TrnMerchantModel();
+        trnMerchantModel.setReferenceNo("reference_5617ae66281ee");
+        trnMerchantModel.setMerchantId(1);
+        trnMerchantModel.setStatus("WAITING");
+        trnMerchantModel.setChannel("API");
+        trnMerchantModel.setOperation("DIRECT");
+        trnMerchantModel.setFxTransactionId(1);
+        trnMerchantModel.setUpdated_at(new Date());
+        trnMerchantModel.setCreated_at(new Date());
+        trnMerchantModel.setId(1);
+        trnMerchantModel.setAcquirerTransactionId(1);
+        trnMerchantModel.setCode("00");
+        trnMerchantModel.setMessage("Waiting");
+        trnMerchantModel.setTransactionId("1-1444392550-1");
+
+
+        trnModel.setMerchant(trnMerchantModel);
+        transactionDetailResponse.setTransaction(trnModel);
+
+        return transactionDetailResponse;
+    }
+}
