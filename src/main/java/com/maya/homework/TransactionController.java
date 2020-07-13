@@ -17,33 +17,27 @@ public class TransactionController {
     @PostMapping(value = "/transactions/list", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public ResponseEntity<Object> list(@RequestBody TransactionListForm transactionListForm) throws JSONException {
-
+    public ResponseEntity<Object> list(@RequestBody TransactionListForm transactionListForm) {
         ApiService service = new ApiService();
         TransactionListResponse listServiceResponse = service.transactionList(transactionListForm);
-
         return ResponseEntity.status(200).body(listServiceResponse);
     }
 
     @GetMapping(value = "/transactions", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public ResponseEntity<Object> details(@RequestParam String transactionId) throws JSONException {
-
+    public ResponseEntity<Object> details(@RequestParam String transactionId) {
         ApiService service = new ApiService();
         TransactionDetailResponse listServiceResponse = service.transactionDetail(transactionId);
-
         return ResponseEntity.status(200).body(listServiceResponse);
     }
 
     @PostMapping(value = "/transactions/report", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public ResponseEntity<Object> report(@RequestBody TransactionReportForm transactionReportForm) throws JSONException {
-
+    public ResponseEntity<Object> report(@RequestBody TransactionReportForm transactionReportForm) {
         ApiService service = new ApiService();
         TransactionReportResponse reportServiceResponse = service.transactionReport(transactionReportForm);
-
         return ResponseEntity.status(200).body(reportServiceResponse);
     }
 }

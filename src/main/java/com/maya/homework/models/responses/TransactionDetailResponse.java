@@ -3,13 +3,13 @@ package com.maya.homework.models.responses;
 import com.maya.homework.models.CustomerInfoModel;
 import com.maya.homework.models.FxModel;
 import com.maya.homework.models.MerchantModel;
-import com.maya.homework.models.TrnModel;
+import com.maya.homework.models.TransactionModel;
 
 public class TransactionDetailResponse {
     FxModel fx;
     CustomerInfoModel customerInfo;
     MerchantModel merchant;
-    TrnModel transaction;
+    TransactionModel transaction;
 
     public FxModel getFx() {
         return fx;
@@ -35,11 +35,11 @@ public class TransactionDetailResponse {
         this.merchant = merchant;
     }
 
-    public TrnModel getTransaction() {
+    public TransactionModel getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(TrnModel transaction) {
+    public void setTransaction(TransactionModel transaction) {
         this.transaction = transaction;
     }
 }

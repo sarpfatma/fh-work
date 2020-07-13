@@ -2,7 +2,7 @@ package com.maya.homework.models;
 
 import java.util.Date;
 
-public class TrnMerchantModel {
+public class TransactionMerchantModel {
     String referenceNo = null;
     int merchantId;
     String status = null;

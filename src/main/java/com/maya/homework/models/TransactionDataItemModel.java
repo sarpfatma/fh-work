@@ -4,8 +4,8 @@ public class TransactionDataItemModel {
     FxModel fx;
     CustomerInfoModel customerInfo;
     MerchantModel merchant;
-    TrnIpnModel ipn;
-    TrnModel transaction;
+    TransactionIpnModel ipn;
+    TransactionModel transaction;
     AcquirerModel acquirer;
     Boolean refundable;
 
@@ -33,19 +33,19 @@ public class TransactionDataItemModel {
         this.merchant = merchant;
     }
 
-    public TrnIpnModel getIpn() {
+    public TransactionIpnModel getIpn() {
         return ipn;
     }
 
-    public void setIpn(TrnIpnModel ipn) {
+    public void setIpn(TransactionIpnModel ipn) {
         this.ipn = ipn;
     }
 
-    public TrnModel getTransaction() {
+    public TransactionModel getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(TrnModel transaction) {
+    public void setTransaction(TransactionModel transaction) {
         this.transaction = transaction;
     }
 

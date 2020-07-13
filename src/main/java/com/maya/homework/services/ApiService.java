@@ -27,10 +27,13 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ApiService {
     public String endpoint = "https://sandbox-reporting.rpdpymnt.com/api/v3";
 
+    // FOR JSON OBJECY MAPPER
     private final ObjectMapper objectMapper = new ObjectMapper();
 
+    // FOR DUMMY DATA
     String[] dummyCurrencies = {"TRY", "USD", "DZD", "AZN", "EUR", "AUD"};
 
+    // Call login service on the rpdpymnt auth service
     public LoginResponse login(LoginForm loginform) throws JSONException {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -43,7 +46,7 @@ public class ApiService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> entity = new HttpEntity<String>(personJsonObject.toString(), headers);
+        HttpEntity<String> entity = new HttpEntity<>(personJsonObject.toString(), headers);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setStatus(500);
 
@@ -63,9 +66,6 @@ public class ApiService {
             loginResponse.setError("Incorrect username or password!");
             loginResponse.setStatus(statusCode);
             return loginResponse;
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-            loginResponse.setError("Invalid Cred");
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             loginResponse.setError("Invalid Cred");
@@ -75,6 +75,8 @@ public class ApiService {
         return loginResponse;
     }
 
+    // @todo Call real service
+    //  RETURN ONLY DUMMY DATA RIGHT NOW
     public TransactionReportResponse transactionReport(TransactionReportForm transactionReportForm) {
         // DUMMY DATA
 
@@ -105,6 +107,8 @@ public class ApiService {
         return transactionReportResponse;
     }
 
+    // @todo Call real service
+    //  RETURN ONLY DUMMY DATA RIGHT NOW
     public TransactionListResponse transactionList(TransactionListForm transactionListForm) {
         // DUMMY DATA
         // i made a dummy service because your api service received the mongo error
@@ -154,10 +158,10 @@ public class ApiService {
             transaction.setMerchant(randomMerchant);
 
             // GENERATE DUMMY TRN MODEL
-            TrnModel randomTrn = new TrnModel();
+            TransactionModel randomTrn = new TransactionModel();
 
             // GENERATE DUMMY MERCHANT for TRN
-            TrnMerchantModel randomTrnMerchant = new TrnMerchantModel();
+            TransactionMerchantModel randomTrnMerchant = new TransactionMerchantModel();
             randomTrnMerchant.setCreated_at(new Date());
             randomTrnMerchant.setMessage("Auth3D is APPROVED");
             randomTrnMerchant.setOperation("3DAUTH");
@@ -172,8 +176,8 @@ public class ApiService {
 
             // GENERATE DUMMY IPN MODEL
 
-            TrnIpnModel trnIpnModel = new TrnIpnModel(rand.nextBoolean());
-            transaction.setIpn(trnIpnModel);
+            TransactionIpnModel transactionIpnModel = new TransactionIpnModel(rand.nextBoolean());
+            transaction.setIpn(transactionIpnModel);
 
             // SET DUMMY REFUNDABLE PARAM
             transaction.setRefundable(rand.nextBoolean());
@@ -251,25 +255,25 @@ public class ApiService {
         transactionDetailResponse.setMerchant(merchantModel);
 
         // GENERATE DUMMY TRANSACTION
-        TrnModel trnModel = new TrnModel();
-        TrnMerchantModel trnMerchantModel = new TrnMerchantModel();
-        trnMerchantModel.setReferenceNo("reference_5617ae66281ee");
-        trnMerchantModel.setMerchantId(1);
-        trnMerchantModel.setStatus("WAITING");
-        trnMerchantModel.setChannel("API");
-        trnMerchantModel.setOperation("DIRECT");
-        trnMerchantModel.setFxTransactionId(1);
-        trnMerchantModel.setUpdated_at(new Date());
-        trnMerchantModel.setCreated_at(new Date());
-        trnMerchantModel.setId(1);
-        trnMerchantModel.setAcquirerTransactionId(1);
-        trnMerchantModel.setCode("00");
-        trnMerchantModel.setMessage("Waiting");
-        trnMerchantModel.setTransactionId("1-1444392550-1");
+        TransactionModel transactionModel = new TransactionModel();
+        TransactionMerchantModel transactionMerchantModel = new TransactionMerchantModel();
+        transactionMerchantModel.setReferenceNo("reference_5617ae66281ee");
+        transactionMerchantModel.setMerchantId(1);
+        transactionMerchantModel.setStatus("WAITING");
+        transactionMerchantModel.setChannel("API");
+        transactionMerchantModel.setOperation("DIRECT");
+        transactionMerchantModel.setFxTransactionId(1);
+        transactionMerchantModel.setUpdated_at(new Date());
+        transactionMerchantModel.setCreated_at(new Date());
+        transactionMerchantModel.setId(1);
+        transactionMerchantModel.setAcquirerTransactionId(1);
+        transactionMerchantModel.setCode("00");
+        transactionMerchantModel.setMessage("Waiting");
+        transactionMerchantModel.setTransactionId("1-1444392550-1");
 
 
-        trnModel.setMerchant(trnMerchantModel);
-        transactionDetailResponse.setTransaction(trnModel);
+        transactionModel.setMerchant(transactionMerchantModel);
+        transactionDetailResponse.setTransaction(transactionModel);
 
         return transactionDetailResponse;
     }

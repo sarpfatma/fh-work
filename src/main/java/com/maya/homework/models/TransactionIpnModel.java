@@ -1,9 +1,9 @@
 package com.maya.homework.models;
 
-public class TrnIpnModel {
+public class TransactionIpnModel {
     Boolean received;
 
-    public TrnIpnModel(Boolean received) {
+    public TransactionIpnModel(Boolean received) {
         this.received = received;
     }
 

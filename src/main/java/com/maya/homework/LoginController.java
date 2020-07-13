@@ -15,10 +15,8 @@ public class LoginController {
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
     public ResponseEntity<Object> loginPost(@RequestBody LoginForm loginForm) throws JSONException {
-
         ApiService service = new ApiService();
         LoginResponse loginService = service.login(loginForm);
-
         return ResponseEntity.status(loginService.getStatus()).body(loginService);
     }
 }
