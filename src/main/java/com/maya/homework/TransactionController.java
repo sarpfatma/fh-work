@@ -6,7 +6,6 @@ import com.maya.homework.models.responses.TransactionDetailResponse;
 import com.maya.homework.models.responses.TransactionListResponse;
 import com.maya.homework.models.responses.TransactionReportResponse;
 import com.maya.homework.services.ApiService;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

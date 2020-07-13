@@ -1,7 +1,6 @@
 package com.maya.homework.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maya.homework.models.*;
@@ -25,13 +24,13 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ApiService {
-    public String endpoint = "https://sandbox-reporting.rpdpymnt.com/api/v3";
+    public final String endpoint = "https://sandbox-reporting.rpdpymnt.com/api/v3";
 
-    // FOR JSON OBJECY MAPPER
+    // FOR JSON OBJECT MAPPER
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     // FOR DUMMY DATA
-    String[] dummyCurrencies = {"TRY", "USD", "DZD", "AZN", "EUR", "AUD"};
+    final String[] dummyCurrencies = {"TRY", "USD", "DZD", "AZN", "EUR", "AUD"};
 
     // Call login service on the rpdpymnt auth service
     public LoginResponse login(LoginForm loginform) throws JSONException {
@@ -257,7 +256,7 @@ public class ApiService {
         // GENERATE DUMMY TRANSACTION
         TransactionModel transactionModel = new TransactionModel();
         TransactionMerchantModel transactionMerchantModel = new TransactionMerchantModel();
-        transactionMerchantModel.setReferenceNo("reference_5617ae66281ee");
+        transactionMerchantModel.setReferenceNo(transactionId);
         transactionMerchantModel.setMerchantId(1);
         transactionMerchantModel.setStatus("WAITING");
         transactionMerchantModel.setChannel("API");
